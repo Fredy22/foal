@@ -15,13 +15,13 @@ import { getRepository } from 'typeorm';
  * - JWTOptional (@foal/jwt)
  *
  * @export
- * @param {(Class<{ id: number|string }>)} userEntityClass - The entity class which must extend UserWithPermissions.
- * @returns {((id: number|string) => Promise<any>)} The returned function expecting an id.
+ * @param {(Class<{ id: number|string|ObjectID }>)} userEntityClass - The entity class which must extend UserWithPermissions.
+ * @returns {((id: number|string|ObjectID) => Promise<any>)} The returned function expecting an id.
  */
 export function fetchUserWithPermissions(
-      userEntityClass: Class<{ id: number|string }>
-    ): (id: number|string) => Promise<any> {
-  return (id: number|string) => getRepository(userEntityClass).findOne(
+      userEntityClass: Class<{ id: number|string|ObjectID }>
+    ): (id: number|string|ObjectID) => Promise<any> {
+  return (id: number|string|ObjectID) => getRepository(userEntityClass).findOne(
     { id },
     { relations: [ 'userPermissions', 'groups', 'groups.permissions' ] }
   );
